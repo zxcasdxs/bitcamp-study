@@ -3,4 +3,7 @@ console.log("안녕하세요");
 console.log("test");
 console.log("bye");
 
+console.log("---------");
+console.log("---------");
+
 console.log("202 변경");
