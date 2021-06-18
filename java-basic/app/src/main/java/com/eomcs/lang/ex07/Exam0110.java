@@ -9,6 +9,7 @@ public class Exam0110 {
     Scanner keyScan = new Scanner(System.in);
     System.out.print("밑변의 길이? ");
     int len = keyScan.nextInt();
+    keyScan.close();
 
     int starLen = 1;
     while (starLen <= len) {
@@ -31,7 +32,7 @@ public class Exam0110 {
       System.out.println();
       starLen += 2;
 
-      keyScan.close();
+
     }
   }
 }

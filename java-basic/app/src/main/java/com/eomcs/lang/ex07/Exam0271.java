@@ -12,7 +12,7 @@ public class Exam0271 {
   // 배열 파리미터는 순서에 상관 없다.
   static void x2(String[] names, int a) {}
 
-  public static void main(String[] args) {
+  public static void main(String[] args, String... names) {
     // 컴파일 확인하라!
   }
 }
