@@ -10,7 +10,7 @@ public class Exam0630 {
     // JVM의 전체 프로퍼티 목록 가져오기
     java.util.Properties props = System.getProperties();
 
-    java.util.Set keySet = props.keySet();
+    java.util.Set keySet = props.keySet();// 키목록 리턴
 
     for (Object key : keySet) {
       String value = System.getProperty((String) key);
