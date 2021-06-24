@@ -2,54 +2,24 @@ package com.eomcs;
 
 import java.util.Date;
 import java.util.Scanner;
+import com.eomcs.App.Board;
 
-public class BoardHandler implements Handler {
-  
-  //한 개의 게시글을 담을 변수를 설계
-  static class Board {
-    String title;
-    String content;
-    String password;
-    int viewCount;
-    Date createdDate;
-  }
+public class BoardHandler {
 
   static Scanner keyScan;
-  
-  public void extracted() {
-    loop : while(true) {
-      System.out.print("게시글 관리> ");
-      String command = keyScan.nextLine();
-
-      switch (command) {
-        case "list": list(); break;
-        case "add": add(); break;
-        case "update": update(); break;
-        case "delete": delete(); break;
-        case "view": view(); break;
-        case "back":
-          break loop;
-        default:
-          System.out.println("지원하지 않는 명령입니다.");
-      }
-      System.out.println();
-    }
-  }
 
   static void list() {
     System.out.println("[게시글 목록]");
-
 
     Object[] arr = ArrayList.toArray();
     int i = 0;
     for (Object item : arr) {
       Board board = (Board) item;
       System.out.printf("%d, %s, %s, %d\n", 
-          i,//(i++가능, 아래쪽 i++대체) 
+          i++, 
           board.title, 
           String.format("%1$tY-%1$tm-%1$td", board.createdDate),
           board.viewCount);
-      i++;
     }
   }
 
@@ -75,7 +45,6 @@ public class BoardHandler implements Handler {
 
     board.createdDate = new Date(); // 현재의 날짜와 시간을 생성하여 배열에 저장한다.
 
-    // 배열에 게시글 정보가 담긴 객체(식판)을 넣는다.
     ArrayList.append(board);
 
     System.out.println("게시글을 등록했습니다.");
@@ -102,7 +71,7 @@ public class BoardHandler implements Handler {
 
     System.out.print("정말 변경하시겠습니까?(y/N) ");
     if (!keyScan.nextLine().equals("y")) {
-      System.out.println("게시글 변경을 취소하였습니다.");
+      System.out.println("게시글 변경을 최소하였습니다.");
       return;
     } 
 
@@ -125,7 +94,7 @@ public class BoardHandler implements Handler {
 
     System.out.print("정말 삭제하시겠습니까?(y/N) ");
     if (!keyScan.nextLine().equals("y")) {
-      System.out.println("게시글 삭제를 취소하였습니다.");
+      System.out.println("게시글 삭제를 최소하였습니다.");
       return;
     } 
 

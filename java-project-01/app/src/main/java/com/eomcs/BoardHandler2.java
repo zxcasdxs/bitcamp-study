@@ -2,67 +2,37 @@ package com.eomcs;
 
 import java.util.Date;
 import java.util.Scanner;
+import com.eomcs.App16.Board;
 
-public class BoardHandler implements Handler {
-  
-  //한 개의 게시글을 담을 변수를 설계
-  static class Board {
-    String title;
-    String content;
-    String password;
-    int viewCount;
-    Date createdDate;
-  }
+public class BoardHandler2 {
 
-  static Scanner keyScan;
-  
-  public void extracted() {
-    loop : while(true) {
-      System.out.print("게시글 관리> ");
-      String command = keyScan.nextLine();
-
-      switch (command) {
-        case "list": list(); break;
-        case "add": add(); break;
-        case "update": update(); break;
-        case "delete": delete(); break;
-        case "view": view(); break;
-        case "back":
-          break loop;
-        default:
-          System.out.println("지원하지 않는 명령입니다.");
-      }
-      System.out.println();
-    }
-  }
+  static Scanner keyScan = new Scanner(System.in);
 
   static void list() {
     System.out.println("[게시글 목록]");
 
-
-    Object[] arr = ArrayList.toArray();
+    Object[] arr = ArrayList2.toArray();
     int i = 0;
     for (Object item : arr) {
-      Board board = (Board) item;
+      Board board = boards[i];
       System.out.printf("%d, %s, %s, %d\n", 
-          i,//(i++가능, 아래쪽 i++대체) 
+          i, 
           board.title, 
           String.format("%1$tY-%1$tm-%1$td", board.createdDate),
           board.viewCount);
-      i++;
     }
   }
 
   static void add() {
     System.out.println("[게시글 등록]");
 
-    if (ArrayList.size == ArrayList.MAX_LENGTH) {
+    if (size == BOARD_LENGTH) {
       System.out.println("더이상 게시글을 추가할 수 없습니다.");
       return;
     }
 
-    // 한 개의 게시글 데이터를 저장할 변수를 준비한다.
-    Board board = new Board(); // Board 설계도에 따라 변수를 만들고 그 주소를 리턴한다.
+
+    Board board = new Board(); 
 
     System.out.print("제목: ");
     board.title = keyScan.nextLine();
@@ -73,10 +43,9 @@ public class BoardHandler implements Handler {
     System.out.print("비밀번호: ");
     board.password = keyScan.nextLine();
 
-    board.createdDate = new Date(); // 현재의 날짜와 시간을 생성하여 배열에 저장한다.
+    board.createdDate = new Date(); 
 
-    // 배열에 게시글 정보가 담긴 객체(식판)을 넣는다.
-    ArrayList.append(board);
+    boards[size++] = board;
 
     System.out.println("게시글을 등록했습니다.");
   }
@@ -87,12 +56,12 @@ public class BoardHandler implements Handler {
     System.out.print("번호? ");
     int index = Integer.parseInt(keyScan.nextLine());
 
-    if (index < 0 || index >= ArrayList.size) {
+    if (index < 0 || index >= size) {
       System.out.println("무효한 게시글 번호입니다.");
       return;
     }
 
-    Board board = (Board) ArrayList.retrieve(index);
+    Board board = boards[index];
 
     System.out.printf("제목(%s)? ", board.title);
     String title = keyScan.nextLine();
@@ -118,7 +87,7 @@ public class BoardHandler implements Handler {
     System.out.print("번호? ");
     int index = Integer.parseInt(keyScan.nextLine());
 
-    if (index < 0 || index >= ArrayList.size) {
+    if (index < 0 || index >= size) {
       System.out.println("무효한 게시글 번호입니다.");
       return;
     }
@@ -129,7 +98,11 @@ public class BoardHandler implements Handler {
       return;
     } 
 
-    ArrayList.remove(index);
+    for (int i = index; i < size - 1; i++) {
+      boards[i] = boards[i + 1];
+    }
+
+    size--;
 
     System.out.println("게시글을 삭제하였습니다.");
   }
@@ -140,12 +113,12 @@ public class BoardHandler implements Handler {
     System.out.print("번호? ");
     int index = Integer.parseInt(keyScan.nextLine());
 
-    if (index < 0 || index >= ArrayList.size) {
+    if (index < 0 || index >= size) {
       System.out.println("무효한 게시글 번호입니다.");
       return;
     }
 
-    Board board = (Board) ArrayList.retrieve(index);
+    Board board = boards[index];
 
     board.viewCount++;
 
