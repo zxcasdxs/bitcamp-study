@@ -4,11 +4,9 @@ import java.util.Date;
 import java.util.Scanner;
 import com.eomcs.App.Board;
 
-public class BoardHandler {
+public class BoardHandler implements List;{
 
-  static final int BOARD_LENGTH = 100;
   static Board[] boards = new Board[BOARD_LENGTH];
-  static int size = 0;
   static Scanner keyScan;
 
   static void list() {

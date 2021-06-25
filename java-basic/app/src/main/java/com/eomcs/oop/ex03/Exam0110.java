@@ -4,7 +4,7 @@ package com.eomcs.oop.ex03;
 
 public class Exam0110 {
   public static void main(String[] args) {
-    class A {
+    class A { //중첩클래스1
       // 인스턴스 변수
       // => new 명령을 통해 생성된다.
       // => new 명령을 실행하기 전까지는 인스턴스 변수는 존재하지 않는다.

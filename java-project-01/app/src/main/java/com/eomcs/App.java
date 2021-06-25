@@ -38,6 +38,39 @@ import java.util.Scanner;
 //25. 회원 데이터를 별도의 목록으로 관리하기(단순한 방법 = 유지보수가 어렵다.)
 //      - 기존의 ArrayList 클래스를 복사하여 ArrayList2로 복사하여 사용한다 // ctrl + F 
 
+//26. 인스턴스 변수로 배열을 관리하기
+//      - ArrayList2.java는 삭제한다.
+//      - ArrayList.java의 변수를 인스턴스 변수로 변경하여 관리한다.
+//      - 메서드에 작업 할 때 사용할 변수의 주소(인스턴스 주소)를 파라미터로 받는다.
+//      - BoardHandler.java와 MemberHandler.java 변경
+//      - 각 핸들러가 사용 할 ArrayList 의 인스턴스 따로 생성한다.
+//      - ArrayList의 메서드를 호출 할 때마다 인스턴스의 주소를 전달한다.
+
+//27. 인스턴스 변수를 사용하는 메소드는 인스턴스 메소드로 선언하기
+//      - ArrayList의 메소드를 클래스 메소드에서 인스턴스 메소드로 전환한다.
+//      - BoardHandler 와 MemberHandler 에서 ArrayList의 메소드를 호출 할 때
+//        인스턴스 메소드 호출 규칙에 따라 변경한다.
+
+//28. 게시판 추가하기(클래스를 복제해서 만들기 => 유지보수가 어렵다)
+//      - BoardHandler 를 복제하여 BoardHanler2를 만든다.
+
+//29. 여러개의 게시판을 다룰 수 있도록 BoardHandler의 변수를 인스턴스 변수로 전환 한다.
+//      - 또한 메서드도 인스턴스 메서드로 전환한다.
+//      - BoardHandler2를 삭제한다.
+//      - 게시판을 구분할때 사용 할 게시판 이름을 담은 인스턴스 변수를 추가한다.
+
+//30. 향후 다양한 그룹의 회원을 관리 할 수 있도록, MemberHandler의 변수도 인스턴스 변수로 전환하기
+//      - MemberHandler의 스태틱 변수를 인스턴스 변수로 바꾼다.
+//      - 메서드도 인스턴스 메서드로 전환한다.
+//      - 실무에서는 가능한 향후 확장성을 고려해서 인스턴스 변수로 주로 선언한다.
+//        그러다보니 메서드도 인스턴스 메서드를 정의하게 된다.
+//      - ComputeHandler도 인스턴스 변수로 변경 하라.
+
+//31. 인스턴스를 만들때 반드시 값을 설정하도록 강제하기
+//      - 생성자 문법을 적용한다.
+//      - 생성자는 인스턴스를 생성할 때 반드시 호출해야 하는 메서드이다.
+//      (인스턴스 생성시 필수로 설정되어야 하는 값을 세팅하기 위한 메서드)
+
 public class App {
 
 
@@ -45,25 +78,22 @@ public class App {
   static Scanner keyScan = new Scanner(System.in);
 
   public static void main(String[] args) {
-
-    // App 클래스에서 만든 Scanner 인스턴스를 BoardHandler와 MemberHandler가 같이 쓴다.
-    BoardHandler.keyScan = keyScan;
-    MemberHandler.keyScan = keyScan;
-    ComputeHandler.keyScan = keyScan;
-    
-    BoardHandler boardHandler = new BoardHandler();
-    MemberHandler memberHandler = new MemberHandler();
-    ComputeHandler computeHandler = new ComputeHandler();
     
     // 규칙에 따라 만든 클래스에 대해
     // 규칙에서 정의한 메서드를 호출하려면
     // 먼저 그 클래스의 인스턴스를 생성한 후
     // 그 인스턴스를 이용하여 메서드를 호출해야 한다.
+    BoardHandler boardHandler = new BoardHandler("게시판1", keyScan);
+    BoardHandler boardHandler2 = new BoardHandler("게시판2", keyScan);
+    MemberHandler memberHandler = new MemberHandler(keyScan);
+    ComputeHandler computeHandler = new ComputeHandler(keyScan);
+    
     menuloop: while(true) {
       System.out.println("[메뉴]");
       System.out.println("  1 : 게시글 관리");
-      System.out.println("  2 : 회원 관리");
-      System.out.println("  3 : 계산기");
+      System.out.println("  2 : 게시글 관리2");
+      System.out.println("  3 : 회원 관리");
+      System.out.println("  4 : 계산기");
       System.out.println("메뉴를 선택하시오. (종료 : quit) [1..2] ");
       String menuNo = keyScan.nextLine();
       
@@ -72,9 +102,12 @@ public class App {
           boardHandler.extracted();
           break;
         case "2":
-          memberHandler.extracted();
+          boardHandler2.extracted();
           break;
         case "3":
+          memberHandler.extracted();
+          break;
+        case "4":
           computeHandler.extracted();
           break;
         case "quit":
